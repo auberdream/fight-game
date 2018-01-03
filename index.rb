@@ -1,15 +1,14 @@
 class RunGame
   def initialize
-    @hp = 6
-    @me = 5
+    @hp = rand(10..18)
+    @me = 15
     @gameover = false
-    @leave = false
     @answer = nil
   end
 
   def menu
     puts "Start                  Quit"
-    puts "About                  ----"
+    puts "About              Instructions"
     @answer = gets.chomp
     choices
   end
@@ -25,13 +24,13 @@ class RunGame
   end
 
   def attack
-    @hp -= 2
+    @hp -= 10
     takedamage
     isanyonedead
   end
 
   def takedamage
-    @me -= 2
+    @me -= 10
   end
 
   def scores
@@ -47,22 +46,45 @@ class RunGame
   def isanyonedead
     if @hp <= 0
       puts "Yay"
-      exit
+      again_maybe
     end
     if @me <= 0
       puts "Oh no"
-      exit
+      again_maybe
     end
   end
 
   def fight
     while @gameover == false
       scores
+      fight_choices
       answer = gets.chomp
       if answer.downcase == "attack"
         attack
       end
     end
+  end
+
+  def fight_choices
+    puts "___________________________"
+    puts "Attack               Defend"
+    puts "---------------------------"
+  end
+
+  def again_maybe
+    puts "Restart                Exit"
+    @answer = gets.chomp
+    if @answer.downcase == "restart"
+      @hp = rand(10..18)
+      @me = 15
+      fight
+    elsif @answer.downcase == "exit"
+      exit
+    end
+  end
+
+  def test
+    true
   end
 end
 
