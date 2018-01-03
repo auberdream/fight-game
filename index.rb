@@ -1,24 +1,45 @@
 class RunGame
   def initialize
-    @hp = 10
-    @me = 10
+    @hp = 6
+    @me = 5
     @gameover = false
     @leave = false
+    @answer = nil
+  end
+
+  def menu
+    puts "Start                  Quit"
+    puts "About                  ----"
+    @answer = gets.chomp
+    choices
+  end
+
+  def choices
+    if @answer.downcase == "start"
+      fight
+    elsif @answer.downcase == "quit"
+      exit
+    elsif @answer.downcase == "about"
+      about
+    end
   end
 
   def attack
-    @hp -= rand(5)
+    @hp -= 2
     takedamage
     isanyonedead
   end
 
   def takedamage
-    @me -= rand(5)
+    @me -= 2
   end
 
   def scores
-    puts ("[]" * @hp)
-    puts "THEM"
+    puts
+    puts "            " + ("[]" * @hp)
+    puts "            " + "THEM"
+    puts
+    puts
     puts ("[]" * @me)
     puts "ME"
   end
@@ -46,4 +67,4 @@ class RunGame
 end
 
 game = RunGame.new
-game.fight
+game.menu
